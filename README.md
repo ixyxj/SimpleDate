@@ -32,6 +32,13 @@ SolarUtil.getTermName(2019, 3, 6)
 ### Usage
 > 相关案例都在单元测试中
 
+jcenter引入：
+```
+dependencies {
+        implementation 'com.xyxj.utils:date:1.0.1'
+}
+```
+
 Gradle引入：
 project build.gradle
 ```

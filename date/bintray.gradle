@@ -1,0 +1,103 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+def andrids = rootProject.ext.android
+def jcenter = rootProject.ext.jcenter
+//每个项目对应一个project name
+def pName = jcenter.name
+
+version = rootProject.ext.android.versionName
+group = rootProject.ext.jcenter.groupId
+
+android {
+
+    compileSdkVersion andrids.compileSdkVersion
+    buildToolsVersion andrids.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion andrids.minSdkVersion
+        targetSdkVersion andrids.targetSdkVersion
+        versionCode andrids.versionCode
+        versionName andrids.versionName
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name jcenter.description
+                url jcenter.siteUrl
+                licenses jcenter.licenses
+                developers {
+                    developer {
+                        id jcenter.authorId
+                        name jcenter.authorName
+                        email jcenter.authorEmail
+                    }
+                }
+                scm {
+                    connection jcenter.gitUrl
+                    developerConnection jcenter.gitUrl
+                    url jcenter.siteUrl
+                }
+            }
+        }
+    }
+}
+
+// 生成jar包的task
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+// 生成javaDoc的jar
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+//设置编码格式，如果不设置可能会在gradlew install的时候出现GBK编码映射错误
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "http://docs.oracle.com/javase/8/docs/api"
+    }
+}
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = pName
+        websiteUrl = jcenter.siteUrl
+        vcsUrl = jcenter.gitUrl
+        licenses = [jcenter.licenseName]
+        publish = true
+    }
+}
+
+tasks.withType(Javadoc).all {
+    enabled = false
+}
