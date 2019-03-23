@@ -9,7 +9,7 @@ import static com.ixyxj.utils.date.Lunar.chineseAnimals;
 import static com.ixyxj.utils.date.Lunar.chineseNumber;
 import static com.ixyxj.utils.date.Lunar.chineseTen;
 import static com.ixyxj.utils.date.Lunar.lunarInfo;
-import static com.ixyxj.utils.date.Lunar.termInfo;
+import static com.ixyxj.utils.date.SolarTerm.solarTermInfo;
 
 /**
  * created by silen on 2019/3/22 14:02
@@ -188,8 +188,8 @@ public class LunarUtil {
         } else {
             cy = getCyclical(y);
         }
-        int t = getTerm(y, 2); //spring
-        int node = getTerm(y, m * 2);
+        int t = getSolarTermDay(y, 2); //spring
+        int node = getSolarTermDay(y, m * 2);
         cm = getCyclicalNum((y - 1900) * 12 + m + 12);
 
         // 依节气调整二月分的年柱, 以立春为界
@@ -306,8 +306,8 @@ public class LunarUtil {
             return 11;
     }
 
-    public static int getTerm(int y, int n) {
-        long times = 31556925974L * (y - 1900) + termInfo[n] * 60000L
+    public static int getSolarTermDay(int y, int n) {
+        long times = 31556925974L * (y - 1900) + solarTermInfo[n] * 60000L
                 + (long) (0.7 * (y - 1900));
         Date offDate = new Date(times - 2208549300000L);
         Calendar cal = Calendar.getInstance();

@@ -13,15 +13,15 @@ public final class Lunar {
     private int day;
     private boolean leap;
 
-    protected final static String[] chineseTen = {"初", "十", "廿", "卅"};
-
     protected final static String[] Gan = new String[]{"甲", "乙", "丙", "丁", "戊", "己", "庚",
             "辛", "壬", "癸"};
     protected final static String[] Zhi = new String[]{"子", "丑", "寅", "卯", "辰", "巳", "午",
             "未", "申", "酉", "戌", "亥"};
 
+    protected final static String[] chineseTen = {"初", "十", "廿", "卅"};
     protected final static String[] chineseNumber = {"一", "二", "三", "四", "五", "六", "七",
             "八", "九", "十", "十一", "十二"};
+
     protected final static String[] chineseAnimals = new String[]{"鼠", "牛", "虎", "兔", "龙", "蛇",
             "马", "羊", "猴", "鸡", "狗", "猪"};
 
@@ -47,10 +47,7 @@ public final class Lunar {
             0x0d530, 0x05aa0, 0x076a3, 0x096d0, 0x04bd7, 0x04ad0, 0x0a4d0,
             0x1d0b6, 0x0d250, 0x0d520, 0x0dd45, 0x0b5a0, 0x056d0, 0x055b2,
             0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0};
-    final static long[] termInfo = new long[]{0, 21208, 42467, 63836, 85337,
-            107014, 128867, 150921, 173149, 195551, 218072, 240693, 263343,
-            285989, 308563, 331033, 353350, 375494, 397447, 419210, 440795,
-            462224, 483532, 504758};
+
 
     public Lunar(Calendar cal) {
         int leapMonth;

@@ -25,6 +25,7 @@ public class DateUtilTest {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(DateUtil.parseToDate("2019/1/1"));
         System.out.println(calendar.get(Calendar.MONTH));
+        System.out.println(DateUtil.getSeason("2019/3/21"));
     }
 
     @Test

@@ -32,8 +32,8 @@ dependencies {
 }
 
 
-def _BASENAME = 'simple-date';
-def _VERSION = '-1.0';
+def _BASENAME = 'simple-date'
+def _VERSION = '-1.0'
 def _DestinationPath = 'build/libs/'
 def _JAR_NAME = _BASENAME + _VERSION + ".jar"
 
@@ -43,7 +43,7 @@ task deleteBuild(type:Delete){
 }
 
 task makeJar(type:Jar){
-    from('build/intermediates/bundles/default/') //从这个目录下取出默认jar包
+    from('build/intermediates/packaged-classes/release/') //从这个目录下取出默认jar包
     into(_DestinationPath) //将jar包输出到指定目录下
     include('classes.jar')
     rename('classes.jar', _JAR_NAME) //自定义jar包的名字
