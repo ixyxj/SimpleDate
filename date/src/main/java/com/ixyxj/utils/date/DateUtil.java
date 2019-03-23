@@ -267,6 +267,7 @@ public final class DateUtil {
             try {
                 dateString = getDateFormat(pattern).format(date);
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return dateString;
@@ -315,29 +316,29 @@ public final class DateUtil {
      * 将日期字符串转化为另一日期字符串。失败返回null。
      *
      * @param date        旧日期字符串
-     * @param olddPattern 旧日期格式
+     * @param oldPattern 旧日期格式
      * @param newPattern  新日期格式
      * @return 新日期字符串
      */
-    public static String formatToString(String date, String olddPattern,
+    public static String formatToString(String date, String oldPattern,
                                         String newPattern) {
-        return format(parseToDate(date, olddPattern), newPattern);
+        return format(parseToDate(date, oldPattern), newPattern);
     }
 
     /**
      * 将日期字符串转化为另一日期字符串。失败返回null。
      *
      * @param date         旧日期字符串
-     * @param olddDteStyle 旧日期风格
-     * @param newParttern  新日期格式
+     * @param oldPattern 旧日期风格
+     * @param newPattern  新日期格式
      * @return 新日期字符串
      */
-    public static String formatToString(String date, DateStyle olddDteStyle,
-                                        String newParttern) {
+    public static String formatToString(String date, DateStyle oldPattern,
+                                        String newPattern) {
         String dateString = null;
-        if (olddDteStyle != null) {
-            dateString = formatToString(date, olddDteStyle.getValue(),
-                    newParttern);
+        if (oldPattern != null) {
+            dateString = formatToString(date, oldPattern.getValue(),
+                    newPattern);
         }
         return dateString;
     }
@@ -346,15 +347,15 @@ public final class DateUtil {
      * 将日期字符串转化为另一日期字符串。失败返回null。
      *
      * @param date         旧日期字符串
-     * @param olddPattern  旧日期格式
+     * @param oldPattern  旧日期格式
      * @param newDateStyle 新日期风格
      * @return 新日期字符串
      */
-    public static String formatToString(String date, String olddPattern,
+    public static String formatToString(String date, String oldPattern,
                                         DateStyle newDateStyle) {
         String dateString = null;
         if (newDateStyle != null) {
-            dateString = formatToString(date, olddPattern,
+            dateString = formatToString(date, oldPattern,
                     newDateStyle.getValue());
         }
         return dateString;
@@ -364,15 +365,15 @@ public final class DateUtil {
      * 将日期字符串转化为另一日期字符串。失败返回null。
      *
      * @param date         旧日期字符串
-     * @param olddDteStyle 旧日期风格
+     * @param oldPattern 旧日期风格
      * @param newDateStyle 新日期风格
      * @return 新日期字符串
      */
-    public static String formatToString(String date, DateStyle olddDteStyle,
+    public static String formatToString(String date, DateStyle oldPattern,
                                         DateStyle newDateStyle) {
         String dateString = null;
-        if (olddDteStyle != null && newDateStyle != null) {
-            dateString = formatToString(date, olddDteStyle.getValue(),
+        if (oldPattern != null && newDateStyle != null) {
+            dateString = formatToString(date, oldPattern.getValue(),
                     newDateStyle.getValue());
         }
         return dateString;
@@ -720,6 +721,27 @@ public final class DateUtil {
         if (dateStyle != null) {
             Date myDate = parseToDate(date, dateStyle);
             week = getWeek(myDate);
+        }
+        return week;
+    }
+
+    /**
+     * 自定义日期格式解析
+     * @param date 日期
+     * @param newPattern 自定义日期格式
+     * @return 星期几
+     */
+    public static Week getWeek(String date, String newPattern) {
+        Week week = null;
+        if (newPattern != null && !newPattern.isEmpty()) {
+            Date myDate = parseToDate(date, newPattern);
+            week = getWeek(myDate);
+        } else {
+            DateStyle dateStyle = getDateStyle(date);
+            if (dateStyle != null) {
+                Date myDate = parseToDate(date, dateStyle);
+                week = getWeek(myDate);
+            }
         }
         return week;
     }
