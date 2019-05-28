@@ -13,6 +13,14 @@ import static org.junit.Assert.assertFalse;
 public class DateUtilTest {
 
     @Test
+    public void testIntervalDays() {
+        String date = "2019-03-23";
+        String other = "2019-03-21";
+        assertEquals(2, DateUtil.getIntervalDays(date, other));
+        assertEquals(-2, DateUtil.getIntervalDays(date, other));
+    }
+
+    @Test
     public void formatToString() {
         String date = "20190323";
         String str1 = DateUtil.formatToString(date, "yyyyMMdd", DateStyle.YYYY_MM_CN);

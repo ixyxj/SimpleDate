@@ -797,7 +797,7 @@ public final class DateUtil {
     /**
      * @param date      日期
      * @param otherDate 另一个日期
-     * @return 相差天数。如果失败则返回-1
+     * @return 相差天数。如果失败则返回-1 负数说明other在date之前
      */
     public static int getIntervalDays(Date date, Date otherDate) {
         int num = -1;
@@ -806,10 +806,29 @@ public final class DateUtil {
         Date otherDateTmp = DateUtil.parseToDate(DateUtil.getDate(otherDate),
                 DateStyle.YYYY_MM_DD);
         if (dateTmp != null && otherDateTmp != null) {
-            long time = Math.abs(dateTmp.getTime() - otherDateTmp.getTime());
+            long time = otherDateTmp.getTime() - dateTmp.getTime();
             num = (int) (time / (24 * 60 * 60 * 1000));
         }
         return num;
+    }
+
+    /**
+     * 获取绝对天数
+     *
+     * @param date
+     * @param otherDate
+     * @return
+     */
+    public static int getIntervalAbsDays(String date, String otherDate) {
+        int intervalDays = getIntervalDays(date, otherDate);
+        if (intervalDays != -1) return Math.abs(intervalDays);
+        return -1;
+    }
+
+    public static int getIntervalAbsDays(Date date, Date otherDate) {
+        int intervalDays = getIntervalDays(date, otherDate);
+        if (intervalDays != -1) return Math.abs(intervalDays);
+        return -1;
     }
 
     /**
